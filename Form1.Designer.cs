@@ -39,6 +39,8 @@
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
+            btn_ajuda = new Button();
+            progressBar1 = new ProgressBar();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -72,7 +74,7 @@
             // 
             // btn_criaprocs
             // 
-            btn_criaprocs.Location = new Point(135, 334);
+            btn_criaprocs.Location = new Point(52, 367);
             btn_criaprocs.Name = "btn_criaprocs";
             btn_criaprocs.Size = new Size(150, 59);
             btn_criaprocs.TabIndex = 5;
@@ -83,7 +85,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = AccessHunter.Properties.Resources._1164454;
-            pictureBox1.Location = new Point(30, 12);
+            pictureBox1.Location = new Point(12, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(127, 99);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -94,7 +96,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Stencil", 21.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(163, 42);
+            label1.Location = new Point(162, 49);
             label1.Name = "label1";
             label1.Size = new Size(251, 34);
             label1.TabIndex = 7;
@@ -136,11 +138,30 @@
             label5.TabIndex = 11;
             label5.Text = "Servidor";
             // 
+            // btn_ajuda
+            // 
+            btn_ajuda.Location = new Point(233, 367);
+            btn_ajuda.Name = "btn_ajuda";
+            btn_ajuda.Size = new Size(150, 59);
+            btn_ajuda.TabIndex = 12;
+            btn_ajuda.Text = "Ajuda";
+            btn_ajuda.UseVisualStyleBackColor = true;
+            btn_ajuda.Click += btn_ajuda_Click;
+            // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(15, 322);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(408, 23);
+            progressBar1.TabIndex = 13;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(435, 438);
+            Controls.Add(progressBar1);
+            Controls.Add(btn_ajuda);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -153,7 +174,7 @@
             Controls.Add(box_bd);
             Controls.Add(box_servidor);
             Name = "Form1";
-            Text = "Form1";
+            Text = "AccessHunter - Procedures";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -172,5 +193,7 @@
         private Label label3;
         private Label label4;
         private Label label5;
+        private Button btn_ajuda;
+        private ProgressBar progressBar1;
     }
 }

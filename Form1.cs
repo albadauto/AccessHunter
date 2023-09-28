@@ -1,3 +1,4 @@
+using AccessHunter;
 using System.Data.SqlClient;
 
 namespace AcessHunter
@@ -13,6 +14,7 @@ namespace AcessHunter
         {
             try
             {
+
                 string connectionString = $"Server={box_servidor.Text};Database={box_bd.Text};User Id={box_usuario.Text};Password={box_senha.Text};TrustServerCertificate=True";
                 using (SqlConnection connection = new SqlConnection())
                 {
@@ -21,8 +23,6 @@ namespace AcessHunter
                     {
                         Directory.CreateDirectory("SQL/");
                     }
-
-
                     var files = Directory.GetFiles("SQL/");
                     if (files.Length > 0)
                     {
@@ -30,9 +30,11 @@ namespace AcessHunter
 
                         foreach (string file in files)
                         {
+
                             if (Path.GetExtension(file) != ".sql")
                             {
-                                MessageBox.Show($"O arquivo {file} não é um arquivo .SQL");
+                                MessageBox.Show($"O arquivo {file} não é um arquivo .SQL por isso foi removido");
+                                File.Delete(file);
                                 return;
                             }
 
@@ -40,32 +42,40 @@ namespace AcessHunter
                             string buscaProc = $"SELECT * FROM SYS.OBJECTS WHERE TYPE = 'P' AND OBJECT_ID = OBJECT_ID('{nomeProc}')";
                             var command = connection.CreateCommand();
                             command.CommandText = buscaProc;
-                            using(var dr = command.ExecuteReader())
+                            using (var dr = command.ExecuteReader())
                             {
                                 if (dr.Read())
                                 {
                                     dr.Close();
 
-                                    using(var command_delete = connection.CreateCommand())
+                                    using (var command_delete = connection.CreateCommand())
                                     {
                                         command_delete.CommandText = $"DROP PROCEDURE {nomeProc}";
                                         command_delete.ExecuteNonQuery();
                                     }
-                                   
+
                                 }
-                            
+
                             }
 
                             var criarProc = File.ReadAllText(file);
-                            using(var commandCreateProc = connection.CreateCommand())
+                            using (var commandCreateProc = connection.CreateCommand())
                             {
-                                commandCreateProc.CommandText = criarProc;  
+                                commandCreateProc.CommandText = criarProc;
                                 commandCreateProc.ExecuteNonQuery();
-                                MessageBox.Show($"Procedure {nomeProc} criada com sucesso");
+                            }
+                            progressBar1.Maximum = files.Length;
+
+                            if (progressBar1.Value < progressBar1.Maximum)
+                            {
+                                progressBar1.Value++;
                             }
                         }
-                        connection.Close();
 
+                        if (progressBar1.Value == progressBar1.Maximum)
+                            MessageBox.Show($"Procedures criadas com sucesso");
+
+                        connection.Close();
                     }
                     else
                     {
@@ -78,10 +88,13 @@ namespace AcessHunter
 
                 MessageBox.Show("Ocorreu um erro: " + sqlexception.Message);
             }
-            
+
         }
 
-
-
+        private void btn_ajuda_Click(object sender, EventArgs e)
+        {
+            Ajuda ajd = new Ajuda();
+            ajd.Show();
+        }
     }
 }
